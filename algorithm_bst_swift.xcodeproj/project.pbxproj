@@ -15,6 +15,8 @@
 		098D598A1FC2E71300E6DA3B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 098D59881FC2E71300E6DA3B /* LaunchScreen.storyboard */; };
 		098D59951FC2E71400E6DA3B /* algorithm_bst_swiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098D59941FC2E71400E6DA3B /* algorithm_bst_swiftTests.swift */; };
 		098D59A01FC2E71400E6DA3B /* algorithm_bst_swiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098D599F1FC2E71400E6DA3B /* algorithm_bst_swiftUITests.swift */; };
+		098D59B11FC2E79F00E6DA3B /* BstClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098D59B01FC2E79F00E6DA3B /* BstClass.swift */; };
+		098D59B51FC3899000E6DA3B /* TreeScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 098D59B41FC3899000E6DA3B /* TreeScene.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		098D599B1FC2E71400E6DA3B /* algorithm_bst_swiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = algorithm_bst_swiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		098D599F1FC2E71400E6DA3B /* algorithm_bst_swiftUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = algorithm_bst_swiftUITests.swift; sourceTree = "<group>"; };
 		098D59A11FC2E71400E6DA3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		098D59B01FC2E79F00E6DA3B /* BstClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BstClass.swift; sourceTree = "<group>"; };
+		098D59B41FC3899000E6DA3B /* TreeScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TreeScene.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +103,12 @@
 		098D597B1FC2E71300E6DA3B /* algorithm_bst_swift */ = {
 			isa = PBXGroup;
 			children = (
-				098D597C1FC2E71300E6DA3B /* AppDelegate.swift */,
+				098D59B01FC2E79F00E6DA3B /* BstClass.swift */,
 				098D597E1FC2E71300E6DA3B /* ViewController.swift */,
 				098D59801FC2E71300E6DA3B /* Main.storyboard */,
 				098D59861FC2E71300E6DA3B /* Assets.xcassets */,
+				098D59B41FC3899000E6DA3B /* TreeScene.sks */,
+				098D597C1FC2E71300E6DA3B /* AppDelegate.swift */,
 				098D59881FC2E71300E6DA3B /* LaunchScreen.storyboard */,
 				098D598B1FC2E71300E6DA3B /* Info.plist */,
 				098D59831FC2E71300E6DA3B /* algorithm_bst_swift.xcdatamodeld */,
@@ -196,6 +202,7 @@
 				TargetAttributes = {
 					098D59781FC2E71300E6DA3B = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 					098D598F1FC2E71400E6DA3B = {
@@ -237,6 +244,7 @@
 			files = (
 				098D598A1FC2E71300E6DA3B /* LaunchScreen.storyboard in Resources */,
 				098D59871FC2E71300E6DA3B /* Assets.xcassets in Resources */,
+				098D59B51FC3899000E6DA3B /* TreeScene.sks in Resources */,
 				098D59821FC2E71300E6DA3B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,6 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				098D59B11FC2E79F00E6DA3B /* BstClass.swift in Sources */,
 				098D59851FC2E71300E6DA3B /* algorithm_bst_swift.xcdatamodeld in Sources */,
 				098D597F1FC2E71300E6DA3B /* ViewController.swift in Sources */,
 				098D597D1FC2E71300E6DA3B /* AppDelegate.swift in Sources */,
@@ -430,12 +439,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CNHB9B5GX6;
 				INFOPLIST_FILE = algorithm_bst_swift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "oliviertests.algorithm-bst-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -445,6 +456,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CNHB9B5GX6;
 				INFOPLIST_FILE = algorithm_bst_swift/Info.plist;
