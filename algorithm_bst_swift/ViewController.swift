@@ -27,24 +27,29 @@ class BstViewController: UIViewController {
     }
     
     func makeNode(){
-        let shape = SKShapeNode()
-        shape.path = UIBezierPath(roundedRect: CGRect(x: -20, y: -20, width: 40, height: 40), cornerRadius: 20).cgPath
-        
-        if let frame = SKViewController.scene?.frame {
-            print("We have a frame")
-            shape.position = CGPoint(x: frame.midX, y: frame.midY)
-            shape.fillColor = UIColor.white
-            shape.strokeColor = UIColor.black
-            shape.lineWidth = 1
-            // Now add a label
-            let myLabel = SKLabelNode(fontNamed: "HelveticaNeue-CondensedBlack")
-            myLabel.text = "231";
-            myLabel.fontSize = 14;
-            myLabel.verticalAlignmentMode = .center
-            myLabel.fontColor = UIColor.black
-            shape.addChild(myLabel)
+        func nodeGenWithLabel(_ labelValue:Int, offset:CGFloat = 0) -> SKShapeNode{
+            let shape = SKShapeNode()
+            shape.path = UIBezierPath(roundedRect: CGRect(x: -20, y: -20, width: 40, height: 40), cornerRadius: 20).cgPath
             
-            SKViewController.scene!.addChild(shape)
+            if let frame = SKViewController.scene?.frame {
+                print("We have a frame")
+                shape.position = CGPoint(x: frame.midX, y: (frame.height/2) - (80 + offset))
+                shape.fillColor = UIColor.white
+                shape.strokeColor = UIColor.black
+                shape.lineWidth = 1
+                // Now add a label
+                let myLabel = SKLabelNode(fontNamed: "HelveticaNeue-CondensedBlack")
+                myLabel.text = String(labelValue);
+                myLabel.fontSize = 14;
+                myLabel.verticalAlignmentMode = .center
+                myLabel.fontColor = UIColor.black
+                shape.addChild(myLabel)
+                SKViewController.scene!.addChild(shape)
+            }
+            return shape
         }
+        let shapeParent = nodeGenWithLabel(20)
+        let shapeChild = nodeGenWithLabel(42, offset: 100)
+        
     }
 }
