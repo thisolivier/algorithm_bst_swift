@@ -10,15 +10,32 @@ import UIKit
 import SpriteKit
 
 class BstViewController: UIViewController {
+    
+    // Links to storyboard/visual elements
     @IBOutlet weak var SKViewController: SKView!
+    @IBAction func LemonButtonAction(_ sender: UIButton) {
+        if let parent = parentNode{
+            parent.position = CGPoint(x: (parent.position.x - 40), y: (parent.position.y - 10))
+        }
+    }
+    @IBAction func JamButtonAction(_ sender: UIButton) {
+    }
+    @IBAction func WoodsButtonAction(_ sender: UIButton) {
+    }
+    @IBAction func LazerButtonAction(_ sender: UIButton) {
+    }
+    
+    // Properties setup
     let myTree:Bst = Bst()
+    var parentNode:SKShapeNode?
+    var childNode:SKShapeNode?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         for _ in 1...20{
             myTree.addNodeFromInt(Int(arc4random_uniform(100)))
         }
-        makeNode()
+        makeNodesAndConnect()
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,43 +43,45 @@ class BstViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func makeNode(){
-        func nodeGenWithLabel(_ labelValue:Int, offset:CGFloat = 0) -> SKShapeNode{
-            let shape = SKShapeNode()
-            shape.path = UIBezierPath(roundedRect: CGRect(x: -20, y: -20, width: 40, height: 40), cornerRadius: 20).cgPath
+    func nodeGenWithLabel(_ labelValue:Int, offset:CGFloat = 0) -> SKShapeNode{
+        let nodeShape = SKShapeNode()
+        let nodeLabel = SKLabelNode(fontNamed: "HelveticaNeue-CondensedBlack")
+        
+        if let frame = SKViewController.scene?.frame {
+            nodeShape.path = UIBezierPath(roundedRect: CGRect(x: -20, y: -20, width: 40, height: 40), cornerRadius: 20).cgPath
+            nodeShape.position = CGPoint(x: frame.midX, y: (frame.height/2) - (100 + offset))
+            nodeShape.fillColor = UIColor.white
+            nodeShape.strokeColor = UIColor.black
+            nodeShape.lineWidth = 1
+            nodeShape.zPosition = 10
+            // Now add a label
             
-            if let frame = SKViewController.scene?.frame {
-                print("We have a frame")
-                shape.position = CGPoint(x: frame.midX, y: (frame.height/2) - (80 + offset))
-                shape.fillColor = UIColor.white
-                shape.strokeColor = UIColor.black
-                shape.lineWidth = 1
-                shape.zPosition = 10
-                // Now add a label
-                let myLabel = SKLabelNode(fontNamed: "HelveticaNeue-CondensedBlack")
-                myLabel.text = String(labelValue);
-                myLabel.fontSize = 14;
-                myLabel.verticalAlignmentMode = .center
-                myLabel.fontColor = UIColor.black
-                myLabel.zPosition = 20
-                shape.addChild(myLabel)
-                SKViewController.scene!.addChild(shape)
-            }
-            return shape
+            nodeLabel.text = String(labelValue);
+            nodeLabel.fontSize = 14;
+            nodeLabel.verticalAlignmentMode = .center
+            nodeLabel.fontColor = UIColor.black
+            nodeLabel.zPosition = 20
+            nodeShape.addChild(nodeLabel)
+            SKViewController.scene!.addChild(nodeShape)
         }
-        func connectNodes(parent: SKShapeNode, child: SKShapeNode){
-            var path = CGMutablePath()
-            path.move(to: parent.position)
-            path.addLine(to: child.position)
-            let line = SKShapeNode()
-            line.path = path
-            line.strokeColor = UIColor.black
-            line.lineWidth = 2
-            line.zPosition = 5
-            SKViewController.scene!.addChild(line)
-        }
-        let shapeParent = nodeGenWithLabel(20)
-        let shapeChild = nodeGenWithLabel(42, offset: 100)
-        connectNodes(parent: shapeParent, child: shapeChild)
+        return nodeShape
+    }
+    
+    func connectNodes(parent: SKShapeNode, child: SKShapeNode){
+        let path = CGMutablePath()
+        let lineShape = SKShapeNode()
+        path.move(to: parent.position)
+        path.addLine(to: child.position)
+        lineShape.path = path
+        lineShape.strokeColor = UIColor.black
+        lineShape.lineWidth = 2
+        lineShape.zPosition = 5
+        SKViewController.scene!.addChild(lineShape)
+    }
+    
+    func makeNodesAndConnect(){
+        parentNode = nodeGenWithLabel(20)
+        childNode = nodeGenWithLabel(42, offset: 100)
+        connectNodes(parent: parentNode!, child: childNode!)
     }
 }

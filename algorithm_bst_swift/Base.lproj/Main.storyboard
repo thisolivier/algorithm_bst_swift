@@ -8,6 +8,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="AvenirNextCondensed.ttc">
+            <string>AvenirNextCondensed-Heavy</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Bst View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -17,15 +22,70 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <skView contentMode="scaleToFill" sceneName="TreeScene.sks" translatesAutoresizingMaskIntoConstraints="NO" id="2ST-2v-eHG">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                            <skView contentMode="scaleToFill" allowsTransparency="YES" sceneName="TreeScene.sks" translatesAutoresizingMaskIntoConstraints="NO" id="2ST-2v-eHG">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="557"/>
                             </skView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Vuy-SK-RxA">
+                                <rect key="frame" x="0.0" y="557" width="375" height="110"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RyP-cN-5pe">
+                                        <rect key="frame" x="0.0" y="0.0" width="94" height="110"/>
+                                        <color key="backgroundColor" red="1" green="0.9550089813" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Heavy" family="Avenir Next Condensed" pointSize="17"/>
+                                        <state key="normal" title="Lemon">
+                                            <color key="titleColor" red="0.29288943527918787" green="0.29288943527918787" blue="0.29288943527918787" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="LemonButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YOs-aL-CMA"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oU3-fF-E9t">
+                                        <rect key="frame" x="94" y="0.0" width="93.5" height="110"/>
+                                        <color key="backgroundColor" red="0.96617296009999998" green="0.42352941179999998" blue="0.70464409719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Heavy" family="Avenir Next Condensed" pointSize="17"/>
+                                        <state key="normal" title="Jam">
+                                            <color key="titleColor" red="0.99048223349999998" green="0.99048223349999998" blue="0.99048223349999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="JamButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QaQ-Nq-Wj7"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kgd-hx-N6C">
+                                        <rect key="frame" x="187.5" y="0.0" width="94" height="110"/>
+                                        <color key="backgroundColor" red="0.74369273970000005" green="0.94239152680000005" blue="0.36190100850000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Heavy" family="Avenir Next Condensed" pointSize="17"/>
+                                        <state key="normal" title="Woods">
+                                            <color key="titleColor" red="0.99048223349999998" green="0.99048223349999998" blue="0.99048223349999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="WoodsButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GIe-fa-cWs"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="75S-zH-mvB">
+                                        <rect key="frame" x="281.5" y="0.0" width="93.5" height="110"/>
+                                        <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Heavy" family="Avenir Next Condensed" pointSize="17"/>
+                                        <state key="normal" title="Lazer">
+                                            <color key="titleColor" red="0.99048223349999998" green="0.99048223349999998" blue="0.99048223349999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="LazerButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XBH-N1-odS"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="110" id="d5b-yL-qbz"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="2ST-2v-eHG" secondAttribute="bottom" id="94K-SA-tjq"/>
-                            <constraint firstItem="2ST-2v-eHG" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="KHK-iE-64M"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Vuy-SK-RxA" secondAttribute="trailing" id="6vb-3S-0Kt"/>
+                            <constraint firstItem="Vuy-SK-RxA" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="6xO-JN-xhc"/>
+                            <constraint firstItem="2ST-2v-eHG" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="KHK-iE-64M"/>
+                            <constraint firstItem="Vuy-SK-RxA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="SSe-On-x7D"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2ST-2v-eHG" secondAttribute="trailing" id="n18-rX-dgo"/>
+                            <constraint firstItem="Vuy-SK-RxA" firstAttribute="top" secondItem="2ST-2v-eHG" secondAttribute="bottom" id="uxS-dv-N4z"/>
                             <constraint firstItem="2ST-2v-eHG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="zoe-Kk-BXS"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -36,6 +96,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="37.600000000000001" y="101.19940029985008"/>
         </scene>
     </scenes>
 </document>
