@@ -37,19 +37,32 @@ class BstViewController: UIViewController {
                 shape.fillColor = UIColor.white
                 shape.strokeColor = UIColor.black
                 shape.lineWidth = 1
+                shape.zPosition = 10
                 // Now add a label
                 let myLabel = SKLabelNode(fontNamed: "HelveticaNeue-CondensedBlack")
                 myLabel.text = String(labelValue);
                 myLabel.fontSize = 14;
                 myLabel.verticalAlignmentMode = .center
                 myLabel.fontColor = UIColor.black
+                myLabel.zPosition = 20
                 shape.addChild(myLabel)
                 SKViewController.scene!.addChild(shape)
             }
             return shape
         }
+        func connectNodes(parent: SKShapeNode, child: SKShapeNode){
+            var path = CGMutablePath()
+            path.move(to: parent.position)
+            path.addLine(to: child.position)
+            let line = SKShapeNode()
+            line.path = path
+            line.strokeColor = UIColor.black
+            line.lineWidth = 2
+            line.zPosition = 5
+            SKViewController.scene!.addChild(line)
+        }
         let shapeParent = nodeGenWithLabel(20)
         let shapeChild = nodeGenWithLabel(42, offset: 100)
-        
+        connectNodes(parent: shapeParent, child: shapeChild)
     }
 }
