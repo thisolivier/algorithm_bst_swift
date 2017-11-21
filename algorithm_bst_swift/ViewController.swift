@@ -14,8 +14,9 @@ class BstViewController: UIViewController {
     // Links to storyboard/visual elements
     @IBOutlet weak var SKViewController: SKView!
     @IBAction func LemonButtonAction(_ sender: UIButton) {
-        if let parent = parentNode{
-            parent.position = CGPoint(x: (parent.position.x - 40), y: (parent.position.y - 10))
+        let move = SKAction.moveBy(x: 20, y: 200, duration: 0.5)
+        if let child = childNode{
+            child.run(move)
         }
     }
     @IBAction func JamButtonAction(_ sender: UIButton) {
@@ -27,6 +28,7 @@ class BstViewController: UIViewController {
     
     // Properties setup
     let myTree:Bst = Bst()
+    let nodeSize = CGSize(width: 40, height: 40)
     var parentNode:SKShapeNode?
     var childNode:SKShapeNode?
     
@@ -48,7 +50,7 @@ class BstViewController: UIViewController {
         let nodeLabel = SKLabelNode(fontNamed: "HelveticaNeue-CondensedBlack")
         
         if let frame = SKViewController.scene?.frame {
-            nodeShape.path = UIBezierPath(roundedRect: CGRect(x: -20, y: -20, width: 40, height: 40), cornerRadius: 20).cgPath
+            nodeShape.path = UIBezierPath(roundedRect: CGRect(x: -20, y: -20, width: nodeSize.width, height: nodeSize.height), cornerRadius: 20).cgPath
             nodeShape.position = CGPoint(x: frame.midX, y: (frame.height/2) - (100 + offset))
             nodeShape.fillColor = UIColor.white
             nodeShape.strokeColor = UIColor.black
@@ -67,7 +69,7 @@ class BstViewController: UIViewController {
         return nodeShape
     }
     
-    func connectNodes(parent: SKShapeNode, child: SKShapeNode){
+    func drawConnectingLine(parent: SKShapeNode, child: SKShapeNode){
         let path = CGMutablePath()
         let lineShape = SKShapeNode()
         path.move(to: parent.position)
@@ -79,9 +81,24 @@ class BstViewController: UIViewController {
         SKViewController.scene!.addChild(lineShape)
     }
     
+    func joinNodesWithSpring(parent: SKShapeNode, child: SKShapeNode){
+        parentNode!.physicsBody = SKPhysicsBody(circleOfRadius: nodeSize.width/2)
+        parentNode!.physicsBody!.isDynamic = false
+        childNode!.physicsBody = SKPhysicsBody(circleOfRadius: nodeSize.width/2)
+        
+        let spring = SKPhysicsJointSpring.joint(withBodyA: parentNode!.physicsBody!, bodyB: childNode!.physicsBody!, anchorA: parentNode!.position, anchorB: childNode!.position)
+        spring.frequency = 0.9
+        spring.damping = 0.2
+        SKViewController.scene!.physicsWorld.add(spring)
+    }
+    
     func makeNodesAndConnect(){
         parentNode = nodeGenWithLabel(20)
-        childNode = nodeGenWithLabel(42, offset: 100)
-        connectNodes(parent: parentNode!, child: childNode!)
+        childNode = nodeGenWithLabel(42, offset: 20)
+        drawConnectingLine(parent: parentNode!, child: childNode!)
+        joinNodesWithSpring(parent: parentNode!, child: childNode!)
+        
     }
+    
+    
 }
