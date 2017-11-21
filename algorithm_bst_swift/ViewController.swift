@@ -14,6 +14,7 @@ class BstViewController: UIViewController, SKSceneDelegate {
     // Links to storyboard/visual elements
     @IBOutlet weak var SKViewController: SKView!
     @IBAction func LemonButtonAction(_ sender: UIButton) {
+        let treeClone = myTree
     }
     @IBAction func JamButtonAction(_ sender: UIButton) {
     }
@@ -32,7 +33,7 @@ class BstViewController: UIViewController, SKSceneDelegate {
         for _ in 1...20{
             myTree.addNodeFromInt(Int(arc4random_uniform(100)))
         }
-        buildTreeVisual(node: myTree.root, tier: 0, root: true)
+        buildTreeVisual(node: myTree.root)
     }
 
     override func didReceiveMemoryWarning() {
@@ -93,25 +94,21 @@ class BstViewController: UIViewController, SKSceneDelegate {
 //
     }
     
-    func buildTreeVisual(node:BstNode, tier:CGFloat = 0, root:Bool = false) -> SKShapeNode?{
+    func buildTreeVisual(node:BstNode, tier:CGFloat = 0, parent:SKShapeNode? = nil) -> SKShapeNode?{
+        let newTier = tier + 1
         switch node{
         case .leaf:
             break
         case .BstNode(let bstNode):
             bstNode.visualNode = nodeGenWithLabel(bstNode.value, offset: (tier * 20))
-            if root{
+            
+            if parent == nil{
                 bstNode.visualNode?.physicsBody!.isDynamic = false
+            } else {
+                joinNodesWithSpring(parent: parent!, child: bstNode.visualNode!)
             }
-            let leftReturn = buildTreeVisual(node: bstNode.left, tier: tier + 1)
-            if let leftReturn = leftReturn{
-                //bstNode.visualLeft = drawConnectingLine(parent: bstNode.visualNode!, child: leftReturn)
-                joinNodesWithSpring(parent: bstNode.visualNode!, child: leftReturn)
-            }
-            let rightReturn = buildTreeVisual(node: bstNode.right, tier: tier + 1)
-            if let rightReturn = rightReturn{
-                //bstNode.visualRight = drawConnectingLine(parent: bstNode.visualNode!, child: rightReturn)
-                joinNodesWithSpring(parent: bstNode.visualNode!, child: rightReturn)
-            }
+            _ = buildTreeVisual(node: bstNode.left, tier: newTier, parent: bstNode.visualNode!)
+            _ = buildTreeVisual(node: bstNode.right, tier: newTier, parent: bstNode.visualNode!)
             return bstNode.visualNode
         }
         return nil
