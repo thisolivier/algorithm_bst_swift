@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import SpriteKit
+
 class Bst{
     var root = BstNode.leaf
     
@@ -64,6 +66,9 @@ class NodeStructFromInt {
     var value:Int
     var left = BstNode.leaf
     var right = BstNode.leaf
+    var visualNode:SKShapeNode?
+    var visualLeft:SKShapeNode?
+    var visualRight:SKShapeNode?
     init(_ nodeValue:Int){
         value = nodeValue
     }
