@@ -14,10 +14,6 @@ class BstViewController: UIViewController, SKSceneDelegate {
     // Links to storyboard/visual elements
     @IBOutlet weak var SKViewController: SKView!
     @IBAction func LemonButtonAction(_ sender: UIButton) {
-        let move = SKAction.moveBy(x: 20, y: 200, duration: 0.5)
-        if let child = childNode{
-            child.run(move)
-        }
     }
     @IBAction func JamButtonAction(_ sender: UIButton) {
     }
@@ -29,9 +25,6 @@ class BstViewController: UIViewController, SKSceneDelegate {
     // Properties setup
     let myTree:Bst = Bst()
     let nodeSize = CGSize(width: 40, height: 40)
-    var parentNode:SKShapeNode?
-    var childNode:SKShapeNode?
-    var lineShape:SKShapeNode?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +32,7 @@ class BstViewController: UIViewController, SKSceneDelegate {
         for _ in 1...20{
             myTree.addNodeFromInt(Int(arc4random_uniform(100)))
         }
-        makeNodesAndConnect()
+        buildTreeVisual(node: myTree.root, tier: 0, root: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -86,23 +79,46 @@ class BstViewController: UIViewController, SKSceneDelegate {
     }
     
     func joinNodesWithSpring(parent: SKShapeNode, child: SKShapeNode){
-        parentNode!.physicsBody!.isDynamic = false
-        let spring = SKPhysicsJointSpring.joint(withBodyA: parentNode!.physicsBody!, bodyB: childNode!.physicsBody!, anchorA: parentNode!.position, anchorB: childNode!.position)
-        spring.frequency = 0.9
+        let spring = SKPhysicsJointSpring.joint(withBodyA: parent.physicsBody!, bodyB: child.physicsBody!, anchorA: parent.position, anchorB: child.position)
+        spring.frequency = 1.5
         spring.damping = 0.4
         
         SKViewController.scene!.physicsWorld.add(spring)
     }
     
     func makeNodesAndConnect(){
-        parentNode = nodeGenWithLabel(20)
-        childNode = nodeGenWithLabel(42, offset: 20)
-        lineShape = drawConnectingLine(parent: parentNode!, child: childNode!)
-        joinNodesWithSpring(parent: parentNode!, child: childNode!)
+//        parentNode = nodeGenWithLabel(20)
+//        childNode = nodeGenWithLabel(42, offset: 20)
+//
+//
     }
     
-    func didSimulatePhysics(for scene: SKScene) {
-        lineShape?.removeFromParent()
-        lineShape = drawConnectingLine(parent: parentNode!, child: childNode!)
+    func buildTreeVisual(node:BstNode, tier:CGFloat = 0, root:Bool = false) -> SKShapeNode?{
+        switch node{
+        case .leaf:
+            break
+        case .BstNode(let bstNode):
+            bstNode.visualNode = nodeGenWithLabel(bstNode.value, offset: (tier * 20))
+            if root{
+                bstNode.visualNode?.physicsBody!.isDynamic = false
+            }
+            let leftReturn = buildTreeVisual(node: bstNode.left, tier: tier + 1)
+            if let leftReturn = leftReturn{
+                //bstNode.visualLeft = drawConnectingLine(parent: bstNode.visualNode!, child: leftReturn)
+                joinNodesWithSpring(parent: bstNode.visualNode!, child: leftReturn)
+            }
+            let rightReturn = buildTreeVisual(node: bstNode.right, tier: tier + 1)
+            if let rightReturn = rightReturn{
+                //bstNode.visualRight = drawConnectingLine(parent: bstNode.visualNode!, child: rightReturn)
+                joinNodesWithSpring(parent: bstNode.visualNode!, child: rightReturn)
+            }
+            return bstNode.visualNode
+        }
+        return nil
     }
+    
+//    func didSimulatePhysics(for scene: SKScene) {
+//        lineShape?.removeFromParent()
+//        lineShape = drawConnectingLine(parent: parentNode!, child: childNode!)
+//    }
 }
