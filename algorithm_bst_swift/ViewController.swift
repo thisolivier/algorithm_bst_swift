@@ -61,7 +61,6 @@ class BstViewController: UIViewController, SKSceneDelegate {
             nodeLabel.fontColor = UIColor.black
             nodeLabel.zPosition = 20
             nodeShape.addChild(nodeLabel)
-            SKViewController.scene!.addChild(nodeShape)
         }
         return nodeShape
     }
@@ -75,43 +74,38 @@ class BstViewController: UIViewController, SKSceneDelegate {
         lineShape.strokeColor = UIColor.black
         lineShape.lineWidth = 2
         lineShape.zPosition = 5
+        let lineSize = CGSize.init(width: 2, height: 60)
+        lineShape.physicsBody = SKPhysicsBody(rectangleOf: lineSize)
         SKViewController.scene!.addChild(lineShape)
         return lineShape
     }
     
     func joinNodesWithSpring(parent: SKShapeNode, child: SKShapeNode){
-        let spring = SKPhysicsJointSpring.joint(withBodyA: parent.physicsBody!, bodyB: child.physicsBody!, anchorA: parent.position, anchorB: child.position)
-        spring.frequency = 1.5
-        spring.damping = 0.4
-        
-        SKViewController.scene!.physicsWorld.add(spring)
+        let physicalLine = drawConnectingLine(parent: parent, child: child)
+        let pinJoint = SKPhysicsJointPin.joint(withBodyA: parent.physicsBody!, bodyB: physicalLine.physicsBody!, anchor: parent.position)
+        let pinJoint2 = SKPhysicsJointPin.joint(withBodyA: child.physicsBody!, bodyB: physicalLine.physicsBody!, anchor: child.position)
+        SKViewController.scene!.physicsWorld.add(pinJoint)
+        SKViewController.scene!.addChild(child)
+        SKViewController.scene!.physicsWorld.add(pinJoint2)
     }
     
-    func makeNodesAndConnect(){
-//        parentNode = nodeGenWithLabel(20)
-//        childNode = nodeGenWithLabel(42, offset: 20)
-//
-//
-    }
-    
-    func buildTreeVisual(node:BstNode, tier:CGFloat = 0, parent:SKShapeNode? = nil) -> SKShapeNode?{
+    func buildTreeVisual(node:BstNode, tier:CGFloat = 0, parent:SKShapeNode? = nil){
         let newTier = tier + 1
         switch node{
         case .leaf:
             break
         case .BstNode(let bstNode):
-            bstNode.visualNode = nodeGenWithLabel(bstNode.value, offset: (tier * 20))
-            
+            bstNode.visualNode = nodeGenWithLabel(bstNode.value, offset: (tier * 60))
             if parent == nil{
                 bstNode.visualNode?.physicsBody!.isDynamic = false
+                SKViewController.scene!.addChild(bstNode.visualNode!)
             } else {
                 joinNodesWithSpring(parent: parent!, child: bstNode.visualNode!)
             }
-            _ = buildTreeVisual(node: bstNode.left, tier: newTier, parent: bstNode.visualNode!)
-            _ = buildTreeVisual(node: bstNode.right, tier: newTier, parent: bstNode.visualNode!)
-            return bstNode.visualNode
+            for child in [bstNode.left, bstNode.right]{
+                buildTreeVisual(node: child, tier: newTier, parent: bstNode.visualNode!)
+            }
         }
-        return nil
     }
     
 //    func didSimulatePhysics(for scene: SKScene) {
