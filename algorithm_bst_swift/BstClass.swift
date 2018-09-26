@@ -30,24 +30,25 @@ class Bst{
                 case .BstNode(let nodeStruct):
                     print("We have a node")
                     var tempNode:BstNode?
-                    switch newValue < nodeStruct.value{
-                        case true:
-                            direction = .left
-                            tempNode = nodeStruct.left
-                            break
-                        case false:
-                            direction = .right
-                            tempNode = nodeStruct.right
+                    if newValue < nodeStruct.value {
+                        direction = .left
+                        tempNode = nodeStruct.left
+                    } else {
+                        direction = .right
+                        tempNode = nodeStruct.right
                     }
                     print("We're going \(direction!)")
                     switch tempNode!{
                     case .leaf:
                         switch direction!{
                             case .left:
+                                newNode.cameFrom = Direction.left
                                 nodeStruct.left = .BstNode(newNode)
                                 break
                             case .right:
+                                newNode.cameFrom = Direction.right
                                 nodeStruct.right = .BstNode(newNode)
+                                break
                             }
                             print("We added a node the long way!")
                     case .BstNode(_):
@@ -66,9 +67,8 @@ class NodeStructFromInt {
     var value:Int
     var left = BstNode.leaf
     var right = BstNode.leaf
+    var cameFrom:Direction?
     var visualNode:SKShapeNode?
-    var visualLeft:SKShapeNode?
-    var visualRight:SKShapeNode?
     init(_ nodeValue:Int){
         value = nodeValue
     }
